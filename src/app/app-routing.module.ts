@@ -44,6 +44,11 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'todo',
+    loadChildren: () => import('./features/todo/todo.module').then(m => m.ToDoModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: '**',
     redirectTo: 'dashboard',
     pathMatch: 'full'
