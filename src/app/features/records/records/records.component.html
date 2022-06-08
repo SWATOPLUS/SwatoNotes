@@ -8,7 +8,7 @@
       <div class="notes">
         <div class="note" *ngFor="let note of notes">
           <div>{{note.text}}</div>
-          <div class="time">{{note.date}}</div>
+          <div class="time">{{note.date === todaysDate ? null : note.date }} {{note.time}}</div>
         </div>
       </div>
       <div class="add-container">

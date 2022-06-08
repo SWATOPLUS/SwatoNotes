@@ -13,34 +13,48 @@ export class RecordsComponent implements OnInit {
   currentUser: any;
 
   public notes: Note[] = [
-  {text: "Закрыть окно", date: "22:10"},
-  {text: "Покупки", date: "10:13"},
-  {text: "Встреча", date: "21:17"},
-  {text: "Просто много текста", date: "06:36"},
+  {text: "Закрыть окно", date: "08.06", time: "22:10"},
+  {text: "Покупки", date: "04.04", time: "10:13"},
+  {text: "Встреча", date: "08.06", time: "21:17"},
+  {text: "Просто много текста", date: "01.01", time: "06:36"},
 ]
 
   public newNoteText: string = '';
 
+
+  padTo2Digits(num: number) {
+    return num.toString().padStart(2, '0')
+  }
+
   formatDate(date: Date) {
-    function padTo2Digits(num: number) {
-      return num.toString().padStart(2, '0')
-    }
     return (
       [
-        padTo2Digits(date.getDate()),
-        padTo2Digits(date.getMonth() + 1),
-      ].join('.') + ' / ' + [
-        padTo2Digits(date.getHours()),
-        padTo2Digits(date.getMinutes()),
-        padTo2Digits(date.getSeconds()),
-      ].join(':')
+        this.padTo2Digits(date.getDate()),
+        this.padTo2Digits(date.getMonth() + 1),
+      ].join('.')
     );
   }
 
+  formatTime(date: Date) {
+    return ([
+      this.padTo2Digits(date.getHours()),
+      this.padTo2Digits(date.getMinutes()),
+      this.padTo2Digits(date.getSeconds()),
+    ].join(':')
+    );
+  }
+
+  getCurrentDate() {
+    const currentDate = new Date();
+    return currentDate;
+  }
+
+  public todaysDate: string = this.formatDate(this.getCurrentDate());
+  
   addNote() {
-    const currentDate = new Date()
-    const noteDate = this.formatDate(currentDate)
-    this.notes.push({text: this.newNoteText, date: noteDate})
+    const noteDate = this.formatDate(this.getCurrentDate());
+    const noteTime = this.formatTime(this.getCurrentDate());
+    this.notes.push({text: this.newNoteText, date: noteDate, time: noteTime})
     this.newNoteText = "";
   }
 
@@ -64,5 +78,6 @@ export class RecordsComponent implements OnInit {
 type Note = {
   text: string;
   date: string;
+  time: string;
 }
 
