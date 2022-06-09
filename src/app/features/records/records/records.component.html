@@ -5,7 +5,8 @@
       <h1>Записи</h1>
     </div>
     <div>
-      <div class="notes">
+      <div *ngIf="!notesCondition"> NO NOTES YET </div>
+      <div *ngIf="notesCondition" class="notes">
         <div class="note" *ngFor="let note of notes">
           <div>{{note.text}}</div>
           <div class="time">{{note.date === todaysDate ? null : note.date }} {{note.time}}</div>
@@ -22,7 +23,7 @@
     </div>
   </div>
 
-  <div class="block">
+<!--   <div class="block">
     <div class="header">
       <h1>Сортировка</h1>
     </div>
@@ -106,6 +107,6 @@
         </button>
       </div>
     </div>
-  </div>
+  </div> -->
 
 </div>

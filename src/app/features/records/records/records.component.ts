@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { Title } from '@angular/platform-browser';
 import { NGXLogger } from 'ngx-logger';
@@ -12,15 +12,27 @@ import { AuthenticationService } from 'src/app/core/services/auth.service';
 export class RecordsComponent implements OnInit {
   currentUser: any;
 
-  public notes: Note[] = [
-  {text: "Закрыть окно", date: "08.06", time: "22:10"},
-  {text: "Покупки", date: "04.04", time: "10:13"},
-  {text: "Встреча", date: "08.06", time: "21:17"},
-  {text: "Просто много текста", date: "01.01", time: "06:36"},
-]
+  public notes: Note[] = []
+
+  public notesCondition: boolean = false;
 
   public newNoteText: string = '';
 
+  getNotesLocalStorage() {
+    const data = localStorage.getItem('notes');
+    if (data != null) {
+      console.log("not null")
+      this.notesCondition = true
+      return JSON.parse(data)
+    }
+    console.log("null");
+    return []
+  }
+
+  updateNotesLocalStorage(notes: Note[]) {
+    localStorage.removeItem("notes");
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }
 
   padTo2Digits(num: number) {
     return num.toString().padStart(2, '0')
@@ -56,6 +68,7 @@ export class RecordsComponent implements OnInit {
     const noteTime = this.formatTime(this.getCurrentDate());
     this.notes.push({text: this.newNoteText, date: noteDate, time: noteTime})
     this.newNoteText = "";
+    this.updateNotesLocalStorage(this.notes);
   }
 
   constructor(private notificationService: NotificationService,
@@ -67,6 +80,7 @@ export class RecordsComponent implements OnInit {
   ngOnInit() {
     this.currentUser = this.authService.getCurrentUser();
     this.titleService.setTitle('angular-material-template - Dashboard');
+    this.notes = this.getNotesLocalStorage();
     this.logger.log('Dashboard loaded');
 
     setTimeout(() => {
@@ -79,5 +93,5 @@ type Note = {
   text: string;
   date: string;
   time: string;
-}
+} 
 
