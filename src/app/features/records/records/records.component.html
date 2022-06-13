@@ -5,10 +5,10 @@
       <h1>Записи</h1>
     </div>
     <div>
-      <div *ngIf="!notesCondition"> NO NOTES YET </div>
-      <div *ngIf="notesCondition" class="notes">
+      <div *ngIf="!notes?.length">NO NOTES YET</div>
+      <div *ngIf="notes?.length" class="notes">
         <div class="note" *ngFor="let note of notes; index as i">
-          <div>{{note.text}}</div>
+          <div>{{note.title}}</div>
           <div class="time">{{note.date === todaysDate ? null : note.date }} {{note.time}}</div>
           <button mat-button (click)="removeNote(i)">
             <mat-icon>highlight_remove</mat-icon>

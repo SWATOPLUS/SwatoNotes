@@ -3,6 +3,7 @@ import { NotificationService } from 'src/app/core/services/notification.service'
 import { Title } from '@angular/platform-browser';
 import { NGXLogger } from 'ngx-logger';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
+import { LocalStorageService } from 'src/app/core/services/localStorage.service';
 
 @Component({
   selector: 'app-records',
@@ -13,26 +14,23 @@ export class RecordsComponent implements OnInit {
   currentUser: any;
 
   public notes: Note[] = []
-
-  public notesCondition: boolean = false;
+  
+  public mainNote: Note = {
+    title: "Мой блокнот",
+    date: "",
+    time: "",
+    children: [
+      {
+        type: "inbox",
+        title: "Входящие",
+        date: "",
+        time: "",
+        children: []
+      }
+    ]
+  } 
 
   public newNoteText: string = '';
-
-  getNotesLocalStorage() {
-    const data = localStorage.getItem('notes');
-    if (data != null) {
-      console.log("not null")
-      this.notesCondition = true
-      return JSON.parse(data)
-    }
-    console.log("null");
-    return []
-  }
-
-  updateNotesLocalStorage(notes: Note[]) {
-    localStorage.removeItem("notes");
-    localStorage.setItem("notes", JSON.stringify(notes));
-  }
 
   padTo2Digits(num: number) {
     return num.toString().padStart(2, '0')
@@ -66,26 +64,29 @@ export class RecordsComponent implements OnInit {
   addNote() {
     const noteDate = this.formatDate(this.getCurrentDate());
     const noteTime = this.formatTime(this.getCurrentDate());
-    this.notes.push({text: this.newNoteText, date: noteDate, time: noteTime})
+    this.notes.push({title: this.newNoteText, date: noteDate, time: noteTime, children: []})
+    this.mainNote.children[0].children = this.notes
     this.newNoteText = "";
-    this.updateNotesLocalStorage(this.notes);
+    this.localStorage.updateLocalStorage(this.mainNote, "notes");
   }
 
   removeNote(index: number) {
     this.notes.splice(index, 1);
-    this.updateNotesLocalStorage(this.notes);
+    this.localStorage.updateLocalStorage(this.mainNote, "notes");
   }
 
   constructor(private notificationService: NotificationService,
     private authService: AuthenticationService,
     private titleService: Title,
-    private logger: NGXLogger) {
+    private logger: NGXLogger,
+    private localStorage: LocalStorageService) {
   }
 
   ngOnInit() {
     this.currentUser = this.authService.getCurrentUser();
     this.titleService.setTitle('angular-material-template - Dashboard');
-    this.notes = this.getNotesLocalStorage();
+    this.mainNote = this.localStorage.getLocalStorage('notes');
+    this.notes = this.mainNote.children[0].children
     this.logger.log('Dashboard loaded');
 
     setTimeout(() => {
@@ -94,9 +95,11 @@ export class RecordsComponent implements OnInit {
   }
 }
 
-type Note = {
-  text: string;
+export interface Note {
+  type?: string;
+  title: string;
   date: string;
   time: string;
-} 
-
+  children: Note[];
+  props?: Record<string, string>;
+}
