@@ -11,19 +11,33 @@ export class LocalStorageService {
           return JSON.parse(data)
         } else if (item === 'notes') {
             return {
-                title: "Мой блокнот",
-                date: "",
-                time: "",
-                children: [
-                  {
-                    type: "inbox",
-                    title: "Входящие",
-                    date: "",
-                    time: "",
-                    children: []
-                  }
-                ]
-              }
+              title: "Мой блокнот",
+              date: "",
+              time: "",
+              children: [
+                {
+                  type: "inbox",
+                  title: "Входящие",
+                  date: "",
+                  time: "",
+                  children: []
+                },
+                {
+                  type: "knowledge",
+                  title: "Знание",
+                  date: "",
+                  time: "",
+                  children: []
+                },
+                {
+                  type: "task",
+                  title: "Задача",
+                  date: "",
+                  time: "",
+                  children: []
+                },
+              ]
+            } 
         } else {
             return {}
         }
