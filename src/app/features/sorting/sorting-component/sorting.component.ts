@@ -27,18 +27,37 @@ export class SortingComponent implements OnInit {
         date: "",
         time: "",
         children: []
-      }
+      },
+      {
+        type: "knowledge",
+        title: "Знание",
+        date: "",
+        time: "",
+        children: []
+      },
+      {
+        type: "task",
+        title: "Задача",
+        date: "",
+        time: "",
+        children: []
+      },
     ]
   } 
-
-
+  
+  skipItem() {
+    this.notes.push(this.notes[0])
+    this.notes.shift();
+    this.localStorage.updateLocalStorage(this.mainNote, 'notes')
+  }
+  
   constructor(private notificationService: NotificationService,
     private authService: AuthenticationService,
     private titleService: Title,
     private logger: NGXLogger,
     private localStorage: LocalStorageService) {
-  }
-
+    }
+    
   ngOnInit() {
     this.currentUser = this.authService.getCurrentUser();
     this.titleService.setTitle('angular-material-template - Dashboard');
