@@ -15,6 +15,8 @@ export class SortingComponent implements OnInit {
   currentUser: any;
 
   public notes: Note[] = []
+  public tasks: Note[] = []
+  public knowledge: Note[] = []
   
   public mainNote: Note = {
     title: "Мой блокнот",
@@ -46,9 +48,15 @@ export class SortingComponent implements OnInit {
   } 
   
   skipItem() {
-    this.notes.push(this.notes[0])
+    this.notes.push(this.notes[0]);
     this.notes.shift();
-    this.localStorage.updateLocalStorage(this.mainNote, 'notes')
+    this.localStorage.updateLocalStorage(this.mainNote, 'notes');
+  }
+
+  sort(parent: any) {
+    parent.push(this.notes[0]);
+    this.notes.shift();
+    this.localStorage.updateLocalStorage(this.mainNote, 'notes');
   }
   
   constructor(private notificationService: NotificationService,
@@ -62,7 +70,9 @@ export class SortingComponent implements OnInit {
     this.currentUser = this.authService.getCurrentUser();
     this.titleService.setTitle('angular-material-template - Dashboard');
     this.mainNote = this.localStorage.getLocalStorage('notes');
-    this.notes = this.mainNote.children[0].children
+    this.notes = this.mainNote.children[0].children;
+    this.knowledge = this.mainNote.children[1].children;
+    this.tasks = this.mainNote.children[2].children;
     this.logger.log('Dashboard loaded');
 
     setTimeout(() => {
