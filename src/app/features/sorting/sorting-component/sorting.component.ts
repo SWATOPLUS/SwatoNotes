@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+/* import { Component, OnInit } from '@angular/core';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { Title } from '@angular/platform-browser';
 import { NGXLogger } from 'ngx-logger';
@@ -80,3 +80,4 @@ export class SortingComponent implements OnInit {
     });
   }
 }
+ */
