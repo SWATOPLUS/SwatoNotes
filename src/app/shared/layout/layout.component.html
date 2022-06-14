@@ -67,6 +67,13 @@
           </mat-icon>
           <p mat-line> Dashboard </p>
         </a>
+        
+        <a mat-list-item [routerLink]="['/todo']" routerLinkActive="active">
+          <mat-icon mat-list-icon>
+            dashboard
+          </mat-icon>
+          <p mat-line> Todo </p>
+        </a>
 
         <a mat-list-item [routerLink]="['/customers']" routerLinkActive="active">
           <mat-icon mat-list-icon>

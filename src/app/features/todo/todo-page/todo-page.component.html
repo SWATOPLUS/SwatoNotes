@@ -1,0 +1,27 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+    <div fxFlex="95%">
+        <h1> Мой список дел </h1>
+        <section class="section">
+            <span class="list-section">
+                <mat-checkbox class="margin" [checked]="allComplete" [color]="task.color"
+                    [indeterminate]="someComplete()" (change)="setAll($event.checked)">
+                    {{task.name}}
+                </mat-checkbox>
+            </span>
+            <span class="list-section">
+                <ul>
+                    <li *ngFor="let subtask of task.subtasks">
+                        <mat-checkbox [color]="subtask.color" (ngModelChange)="updateAllComplete()">
+                            {{subtask.name}}
+                        </mat-checkbox>
+                        <button mat-raised-button color="accent">Delete</button>
+                    </li>
+                </ul>
+            </span>
+        </section>
+        <input matInput type="text" value="Type your next task">
+        <button mat-fab color="accent" aria-label="Example icon button with a bookmark icon">
+            +
+        </button>
+    </div>
+</div>
