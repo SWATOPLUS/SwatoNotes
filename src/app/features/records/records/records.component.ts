@@ -26,7 +26,21 @@ export class RecordsComponent implements OnInit {
         date: "",
         time: "",
         children: []
-      }
+      },
+      {
+        type: "knowledge",
+        title: "Знание",
+        date: "",
+        time: "",
+        children: []
+      },
+      {
+        type: "task",
+        title: "Задача",
+        date: "",
+        time: "",
+        children: []
+      },
     ]
   } 
 
