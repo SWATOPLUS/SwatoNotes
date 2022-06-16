@@ -61,4 +61,8 @@ export class NoteService {
       this.notes.splice(index, 1);
       this.localStorage.set('notes', this.notes);
     }
+
+    public sortNote(newParentId: string, note: Note) {
+      note.parentId = newParentId;
+    }
 }

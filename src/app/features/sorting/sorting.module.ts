@@ -1,4 +1,4 @@
-/* import { NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { SortingRoutingModule } from './sorting-routing.module';
@@ -15,4 +15,3 @@ import { SharedModule } from 'src/app/shared/shared.module';
   entryComponents: []
 })
 export class SortingModule { }
- */

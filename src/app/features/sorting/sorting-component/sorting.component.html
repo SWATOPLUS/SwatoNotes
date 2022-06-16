@@ -4,21 +4,19 @@
   </div>
   <div>
     <div class="note">
-      <div>{{notes[0].title}}</div>
-      <div class="time">{{notes[0].date}}</div>
+      <div>{{mainInbox[0].title}}</div>
+      <div class="time">{{mainInbox[0].creationLocalDateTime}}</div>
       <button mat-mini-fab (click)="skipItem()">
         <mat-icon>next_plan</mat-icon>
       </button>
     </div>
     <div class="sort-container">
-      <button mat-raised-button (click)="sort(tasks)">
-        ЗАДАЧА
-        <mat-icon>add</mat-icon>
-      </button>
-      <button mat-raised-button (click)="sort(knowledge)">
-        ЗНАНИЕ
-        <mat-icon>add</mat-icon>
-      </button>
+      <div *ngFor="let item of projects">
+        <button mat-raised-button (click)="sort(item.id)">
+          {{item.title}}
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
     </div>
   </div>
 </div>
