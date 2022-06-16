@@ -19,17 +19,9 @@ div {
     display: flex;
     justify-content: flex-start;
   }
-  
-  .time {
-    font-size: small;
-    margin: 0px 0px 15px 0px; 
+
+  .note a{
+    text-decoration: none;
+    cursor: pointer;
+    color: black;
   }
-  
-  .date-container {
-    display: flex;
-  }
-  
-  .state-container {
-    display: flex;
-  }
-  

@@ -1,0 +1,72 @@
+import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { NotificationService } from 'src/app/core/services/notification.service';
+import { Title } from '@angular/platform-browser';
+import { NGXLogger } from 'ngx-logger';
+import { AuthenticationService } from 'src/app/core/services/auth.service';
+import { Note, NoteService } from 'src/app/core/services/notes.service';
+
+@Component({
+  selector: 'app-projects',
+  templateUrl: './projects.component.html',
+  styleUrls: ['./projects.component.css']
+})
+export class ProjectsComponent implements OnInit {
+  currentUser: any;
+
+  public project: Note | any;
+  public subProjects: any
+  public notes: Note [] = [];
+  id: any;
+
+  public newNoteText: string = "";
+  public newProjectText: string = "";
+
+  displayDate(note: Note) {
+    return note.creationLocalDateTime;
+  }
+
+  reload() {
+    this.notes = this.noteService.getChildren(this.project.id).filter(x => x.type === 'note');
+    this.subProjects = this.noteService.getChildren(this.project.id).filter(x => x.type === 'project');
+  }
+
+  removeNote(note: Note) {
+    this.noteService.removeNote(note.id);
+    this.reload();
+  }
+  
+  addNote() {
+    this.noteService.addNote(this.newNoteText, 'note', this.project.id);
+    this.reload();
+    this.newNoteText = "";
+  }
+
+  addProject() {
+    this.noteService.addNote(this.newProjectText, "project", this.project.id);
+    this.newProjectText = "";
+    this.reload();
+  }
+
+  constructor(private notificationService: NotificationService,
+    private authService: AuthenticationService,
+    private titleService: Title,
+    private logger: NGXLogger,
+    private noteService: NoteService,
+    private activatedRoute: ActivatedRoute,) {
+      this.id = activatedRoute.snapshot.params['id'];
+  }
+
+  ngOnInit() {
+    this.currentUser = this.authService.getCurrentUser();
+    this.titleService.setTitle('angular-material-template - Dashboard');
+    this.project = this.noteService.getNote(this.id);
+    this.subProjects = this.noteService.getChildren(this.project?.id).filter(x => x.type === 'project');
+    this.notes = this.noteService.getChildren(this.project?.id).filter(x => x.type === 'note');
+    this.logger.log('Dashboard loaded');
+
+    setTimeout(() => {
+      this.notificationService.openSnackBar('Welcome!');
+    });
+  }
+}

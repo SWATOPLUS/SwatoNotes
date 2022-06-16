@@ -43,7 +43,5 @@ export class MainComponent implements OnInit {
     this.mainNote = this.noteService.getMainNote();
     this.projects = this.noteService.getChildren(this.mainNote.id);
     this.reload();
-    console.log(this.mainNote)
-    console.log(this.projects)
   }
 }
