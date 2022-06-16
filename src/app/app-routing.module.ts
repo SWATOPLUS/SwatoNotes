@@ -29,7 +29,7 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'project/:id',
+    path: 'project',
     loadChildren: () => import('./features/projects/projects.module').then(m => m.ProjectsModule),
     canActivate: [AuthGuard]
   },

@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { NotificationService } from 'src/app/core/services/notification.service';
@@ -15,9 +16,10 @@ export class ProjectsComponent implements OnInit {
   currentUser: any;
 
   public project: Note | any;
-  public subProjects: any
+  public subProjects: any;
   public notes: Note [] = [];
-  id: any;
+  public inboxRecord: Note[] = [];
+  private subscription: Subscription;
 
   public newNoteText: string = "";
   public newProjectText: string = "";
@@ -48,21 +50,26 @@ export class ProjectsComponent implements OnInit {
     this.reload();
   }
 
+  reloadProject(id: string) {
+    this.project = this.noteService.getNote(id);
+    const inbox = this.noteService.getTool(this.project.id, 'inbox');
+    this.inboxRecord = this.noteService.getChildren(inbox?.id);
+    this.subProjects = this.noteService.getChildren(this.project?.id).filter(x => x.type === 'project');
+    this.notes = this.noteService.getChildren(this.project?.id).filter(x => x.type === 'note');
+  }
+
   constructor(private notificationService: NotificationService,
     private authService: AuthenticationService,
     private titleService: Title,
     private logger: NGXLogger,
     private noteService: NoteService,
     private activatedRoute: ActivatedRoute,) {
-      this.id = activatedRoute.snapshot.params['id'];
+      this.subscription = activatedRoute.params.subscribe(params => this.reloadProject(params["id"]));
   }
 
   ngOnInit() {
     this.currentUser = this.authService.getCurrentUser();
     this.titleService.setTitle('angular-material-template - Dashboard');
-    this.project = this.noteService.getNote(this.id);
-    this.subProjects = this.noteService.getChildren(this.project?.id).filter(x => x.type === 'project');
-    this.notes = this.noteService.getChildren(this.project?.id).filter(x => x.type === 'note');
     this.logger.log('Dashboard loaded');
 
     setTimeout(() => {

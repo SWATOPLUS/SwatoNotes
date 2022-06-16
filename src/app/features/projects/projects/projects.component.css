@@ -20,6 +20,12 @@ button {
   justify-content: flex-start;
 }
 
+.note a{
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+
 .time {
   font-size: small;
   margin: 0px 0px 15px 0px; 
