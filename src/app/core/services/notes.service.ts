@@ -35,6 +35,15 @@ export class NoteService {
         return this.notes.find(x => x.id === id);
     }
 
+    public getTool(parentId: string, type: string) {
+      const existingTool = this.getChildren(parentId).filter(x => x.type === type)[0];
+      if(existingTool) {
+        return existingTool
+      }
+      const id = this.addNote('', type, parentId);
+      return this.getNote(id)!;
+    }
+
     public getChildren(parentId: string) {
         return this.notes.filter(x => x.parentId === parentId);
     }
@@ -44,6 +53,7 @@ export class NoteService {
       const date = Date.now();
       this.notes.push({id, title, creationLocalDateTime: date, type, parentId});
       this.localStorage.set('notes', this.notes);
+      return id
     }
 
     public removeNote(id: string) {
