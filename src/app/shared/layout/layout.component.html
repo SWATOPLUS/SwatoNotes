@@ -67,6 +67,13 @@
           </mat-icon>
           <p mat-line> Dashboard </p>
         </a>
+        
+        <a mat-list-item [routerLink]="['/main']" routerLinkActive="active">
+          <mat-icon mat-list-icon>
+            home_filled
+          </mat-icon>
+          <p mat-line> Main Page </p>
+        </a>
 
         <a mat-list-item [routerLink]="['/records']" routerLinkActive="active">
           <mat-icon mat-list-icon>
@@ -82,12 +89,7 @@
           <p mat-line> Sorting </p>
         </a>
 
-        <a mat-list-item [routerLink]="['/customers']" routerLinkActive="active">
-          <mat-icon mat-list-icon>
-            business
-          </mat-icon>
-          <p mat-line> Customers </p>
-        </a>
+
         <a mat-list-item [routerLink]="['/users']" routerLinkActive="active">
           <mat-icon mat-list-icon>
             people
