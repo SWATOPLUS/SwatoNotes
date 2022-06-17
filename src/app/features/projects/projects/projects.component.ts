@@ -64,7 +64,7 @@ export class ProjectsComponent implements OnInit {
     private logger: NGXLogger,
     private noteService: NoteService,
     private activatedRoute: ActivatedRoute,) {
-      this.subscription = activatedRoute.params.subscribe(params => this.reloadProject(params["id"]));
+      this.subscription = this.activatedRoute.params.subscribe(params => this.reloadProject(params["id"]));
   }
 
   ngOnInit() {
