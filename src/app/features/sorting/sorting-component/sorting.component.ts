@@ -27,7 +27,6 @@ export class SortingComponent implements OnInit {
   }
 
   sortToNotes() {
-    this.mainInbox[0].type = 'note';
     this.noteService.setParent(this.mainInbox[0].id, this.mainProject.id);
     this.reload();
     this.checkNotes();
