@@ -19,7 +19,7 @@
       </div>
       <div class="add-container">
         <mat-form-field>
-          <input matInput placeholder="Новая запись" [(ngModel)]="newNoteText">
+          <input matInput placeholder="Новая заметка" [(ngModel)]="newNoteText">
         </mat-form-field>
         <button mat-fab aria-label="add new note" (click)="addNote()">
           <mat-icon>add</mat-icon>
@@ -66,11 +66,14 @@
       </div>
       <div class="add-container">
         <mat-form-field>
-          <input matInput placeholder="Новая заметка">
+          <input matInput placeholder="Новая запись">
         </mat-form-field>
         <button mat-fab aria-label="add new inbox">
           <mat-icon>add</mat-icon>
         </button>
       </div>
+      <button mat-raised-button color="primary">
+        <a [routerLink]="['/sorting', this.project?.id]">Sort notes</a>
+      </button>
   </div>
 </div>

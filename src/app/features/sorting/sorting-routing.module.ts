@@ -9,7 +9,8 @@ const routes: Routes = [
     path: '',
     component: LayoutComponent,
     children: [
-      { path: '', component: SortingComponent },
+      { path: '', redirectTo: '00000000-0000-0000-0000-000000000000', component: SortingComponent },
+      { path: ':id', component: SortingComponent },
     ]
   }
 ];

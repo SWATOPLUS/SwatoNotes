@@ -62,7 +62,9 @@ export class NoteService {
       this.localStorage.set('notes', this.notes);
     }
 
-    public sortNote(newParentId: string, note: Note) {
-      note.parentId = newParentId;
+    public setParent(noteId: string, newParentId: string) {
+      const note = this.getNote(noteId);
+      note!.parentId = newParentId;
+      this.localStorage.set('notes', this.notes);
     }
 }
