@@ -26,6 +26,13 @@ export class SortingComponent implements OnInit {
     this.mainInbox.shift();
   }
 
+  sortToNotes() {
+    this.mainInbox[0].type = 'note';
+    this.noteService.setParent(this.mainInbox[0].id, this.mainProject.id);
+    this.reload();
+    this.checkNotes();
+  }
+
   sort(id: string) {
     const newInbox = this.noteService
       .getTool(id, 'inbox')
