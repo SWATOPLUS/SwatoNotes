@@ -7,6 +7,7 @@ export interface Note {
     parentId: string;
     type: string;
     title: string;
+    description?: string;
     creationLocalDateTime: number;
 }
 
@@ -65,6 +66,15 @@ export class NoteService {
     public setParent(noteId: string, newParentId: string) {
       const note = this.getNote(noteId);
       note!.parentId = newParentId;
+      this.localStorage.set('notes', this.notes);
+    }
+
+    public setKey(id: string, title: string, description?: string) {
+      const note = this.getNote(id);
+      note!.title = title;
+      if(description?.length) {
+        note!.description = description;
+      }
       this.localStorage.set('notes', this.notes);
     }
 }

@@ -1,0 +1,18 @@
+<h2> Title: </h2>
+<div> {{note.title}} </div>
+<mat-form-field>
+    <input matInput placeholder="Type new title" (blur)="setTitle()" [(ngModel)]="newTitleText">
+</mat-form-field>
+<br>
+<h2> Description: </h2>
+<div *ngIf="note.description.length"> {{note.description}} </div>
+<div *ngIf="!note.description.length"> NO DESCRIPTION YET </div>
+<mat-form-field>
+    <input matInput placeholder="Type new description" (blur)="setDescription()" [(ngModel)]="newDescriptionText">
+</mat-form-field>
+<br>
+<h2> Time </h2>
+<div> {{date}} </div>
+<br>
+<button (click)="setChanges()"> Save Changes </button>
+<button (click)="removeChanges()"> Remove Changes </button>

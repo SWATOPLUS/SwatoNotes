@@ -10,7 +10,7 @@
       <div *ngIf="!notes?.length">NO NOTES YET</div>
       <div *ngIf="notes?.length" class="notes">
         <div class="note" *ngFor="let note of notes">
-          <div>{{note.title}}</div>
+          <div (dblclick)="navToEdit(note.id)">{{note.title}}</div>
           <div class="time">{{displayDate(note)}}</div>
           <button mat-button (click)="removeNote(note)">
             <mat-icon>highlight_remove</mat-icon>

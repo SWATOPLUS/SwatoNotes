@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { Title } from '@angular/platform-browser';
@@ -58,12 +58,17 @@ export class ProjectsComponent implements OnInit {
     this.notes = this.noteService.getChildren(this.project?.id).filter(x => x.type === 'note');
   }
 
+  navToEdit(id: string) {
+    this.router.navigate([`/note/${id}`]);
+  }
+
   constructor(private notificationService: NotificationService,
     private authService: AuthenticationService,
     private titleService: Title,
     private logger: NGXLogger,
     private noteService: NoteService,
-    private activatedRoute: ActivatedRoute,) {
+    private activatedRoute: ActivatedRoute,
+    private router: Router) {
       this.subscription = this.activatedRoute.params.subscribe(params => this.reloadProject(params["id"]));
   }
 
