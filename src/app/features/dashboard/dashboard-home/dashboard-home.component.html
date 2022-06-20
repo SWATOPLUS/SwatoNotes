@@ -11,8 +11,15 @@
       <div fxFlex="50%" class="text-center no-records animate">
         <mat-icon>dashboard</mat-icon>
         <p>This is the dashboard.</p>
+        <div> Загрузи свои заметки в txt</div>
+        <div>
+          <input type="file" accept=".txt" (change)="onFileSelected($event)">
+        </div>
+        <button mat-raised-button color="primary" (click)="addNotes()">
+          <div>Send to inbox notes</div>
+          <mat-icon>add</mat-icon>
+        </button>
       </div>
-      <mat-icon> </mat-icon>
     </div>
   </div>
 </div>
