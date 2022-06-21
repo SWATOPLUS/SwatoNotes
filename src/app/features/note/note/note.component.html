@@ -5,8 +5,8 @@
 </mat-form-field>
 <br>
 <h2> Description: </h2>
-<div *ngIf="note.description.length"> {{note.description}} </div>
-<div *ngIf="!note.description.length"> NO DESCRIPTION YET </div>
+<div *ngIf="note.description"> {{note.description}} </div>
+<div *ngIf="!note.description"> NO DESCRIPTION YET </div>
 <mat-form-field>
     <input matInput placeholder="Type new description" (blur)="setDescription()" [(ngModel)]="newDescriptionText">
 </mat-form-field>
