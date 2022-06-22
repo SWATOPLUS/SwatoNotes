@@ -42,7 +42,11 @@ export class SortingComponent implements OnInit {
 
   checkNotes() {
     if (!this.mainInbox.length) {
-      this.router.navigate([`/notes/sorting/${this.projects[0].id}`]);
+      if(this.projects.length) {
+        this.router.navigate([`/notes/sorting/${this.projects[0].id}`]);
+      }
+      alert("Here is no notes for sorting anymore");
+      this.router.navigate([`/notes/main`]);
     }
   }
 
