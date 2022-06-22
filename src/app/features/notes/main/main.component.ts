@@ -14,8 +14,6 @@ export class MainComponent implements OnInit {
   public mainNote!: Note
   public projects: Note[] = [];
 
-  public newProjectText: string = "";
-
   constructor(
     private logger: NGXLogger,
     private titleService: Title,
@@ -26,9 +24,8 @@ export class MainComponent implements OnInit {
     this.projects = this.noteService.getChildren(this.mainNote.id);
   }
 
-  addProject() {
-    this.noteService.addNote(this.newProjectText, "project", this.mainNote.id);
-    this.newProjectText = "";
+  addProject(newProjectText: string) {
+    this.noteService.addNote(newProjectText, "project", this.mainNote.id);
     this.reload();
   }
 
