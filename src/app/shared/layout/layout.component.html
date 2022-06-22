@@ -68,6 +68,13 @@
           <p mat-line> Dashboard </p>
         </a>
         
+        <a mat-list-item [routerLink]="['/notes/main']" routerLinkActive="active">
+          <mat-icon mat-list-icon>
+            home_filled
+          </mat-icon>
+          <p mat-line> Main Page </p>
+        </a>
+        
         <a mat-list-item [routerLink]="['/todo']" routerLinkActive="active">
           <mat-icon mat-list-icon>
             dashboard
@@ -75,12 +82,21 @@
           <p mat-line> Todo </p>
         </a>
 
-        <a mat-list-item [routerLink]="['/customers']" routerLinkActive="active">
+        <a mat-list-item [routerLink]="['/notes/records']" routerLinkActive="active">
           <mat-icon mat-list-icon>
-            business
+            notes
           </mat-icon>
-          <p mat-line> Customers </p>
+          <p mat-line> Records </p>
         </a>
+
+        <a mat-list-item [routerLink]="['/notes/sorting']" routerLinkActive="active">
+          <mat-icon mat-list-icon>
+            filter_alt
+          </mat-icon>
+          <p mat-line> Sorting </p>
+        </a>
+
+
         <a mat-list-item [routerLink]="['/users']" routerLinkActive="active">
           <mat-icon mat-list-icon>
             people

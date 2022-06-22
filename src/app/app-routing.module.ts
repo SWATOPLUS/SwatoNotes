@@ -1,3 +1,4 @@
+import { NotesModule } from './features/notes/notes.module';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -14,8 +15,8 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'customers',
-    loadChildren: () => import('./features/customers/customers.module').then(m => m.CustomersModule),
+    path: 'notes',
+    loadChildren: () => import('./features/notes/notes.module').then(m => m.NotesModule),
     canActivate: [AuthGuard]
   },
   {

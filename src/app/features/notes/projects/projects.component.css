@@ -1,0 +1,45 @@
+div {
+  margin: 10px;
+}
+
+button {
+  margin: 10px;
+}
+
+.wrapper {
+  display: flex;
+}
+
+.block {
+  border-radius: 10px;
+  border: 3px solid #6743B7;
+}
+
+.note {
+  display: flex;
+  justify-content: flex-start;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+
+button a {
+  color: white;
+}
+
+.time {
+  font-size: small;
+  margin: 0px 0px 15px 0px; 
+}
+
+.date-container {
+  display: flex;
+}
+
+.state-container {
+  display: flex;
+}

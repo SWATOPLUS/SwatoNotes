@@ -1,0 +1,37 @@
+<div class="block">
+  <div class="header">
+    <h1>Сортировка: {{this.mainProject.title}}</h1>
+  </div>
+  <div>
+    <div *ngIf="!mainInbox.length">
+      <h2>There is no Notes yet</h2>
+    </div> 
+    <div *ngIf="mainInbox.length">
+      <div class="note">
+        <div>{{mainInbox[0].title}}</div>
+        <div class="time">{{mainInbox[0].creationLocalDateTime}}</div>
+        <button mat-mini-fab (click)="skipItem()">
+          <mat-icon>next_plan</mat-icon>
+        </button>
+      </div>
+      <button mat-raised-button (click)="sortToNotes()">
+        <mat-icon>arrow_circle_up</mat-icon>
+        <div>В Заметки</div>
+      </button>
+    </div> 
+    <div *ngIf="!projects.length">
+      <h2>There is no projects yet</h2>
+    </div> 
+    <div *ngIf="projects.length">
+      <div class="sort-container">
+        <div *ngFor="let item of projects">
+          <button mat-raised-button (click)="sort(item.id)">
+            {{item.title}}
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div> 
+
+  </div>
+</div>

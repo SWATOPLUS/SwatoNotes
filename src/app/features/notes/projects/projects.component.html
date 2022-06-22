@@ -1,0 +1,79 @@
+<div>
+  Проект : {{this.project?.title}}
+</div>
+<div class="wrapper">
+  <div class="block">
+    <div class="header">
+      <h1>Заметки</h1>
+    </div>
+    <div>
+      <div *ngIf="!notes?.length">NO NOTES YET</div>
+      <div *ngIf="notes?.length" class="notes">
+        <div class="note" *ngFor="let note of notes">
+          <div (dblclick)="navToEdit(note.id)">{{note.title}}</div>
+          <div class="time">{{displayDate(note)}}</div>
+          <button mat-button (click)="removeNote(note)">
+            <mat-icon>highlight_remove</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div class="add-container">
+        <mat-form-field>
+          <input matInput placeholder="Новая заметка" [(ngModel)]="newNoteText">
+        </mat-form-field>
+        <button mat-fab aria-label="add new note" (click)="addNote()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="header">
+      <h1>Проекты</h1>
+    </div>
+
+    <div *ngIf="!subProjects.length"> NO PROJECTS YET </div>
+    <div *ngIf="subProjects.length" class="notes">
+      <div *ngFor="let note of subProjects" class="note">
+        <a [routerLink]="['/notes/project', note.id]"> {{note.title}} {{note.type}} </a>
+        <button mat-button (click)="this.removeNote(note)">
+          <mat-icon>highlight_remove</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="add-container">
+      <mat-form-field>
+        <input matInput placeholder="Новый проект" [(ngModel)]="this.newProjectText">
+      </mat-form-field>
+      <button mat-fab aria-label="add project" (click)="this.addProject()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="wrapper">
+  <div class="block">
+    <div class="header">
+      <h1>Входящие Записи</h1>
+    </div>
+      <div class="note" *ngFor="let inbox of inboxRecord">
+        <div>{{inbox.title}}</div>
+        <div class="time">{{displayDate(inbox)}}</div>
+        <button mat-button (click)="removeNote(inbox)">
+          <mat-icon>highlight_remove</mat-icon>
+        </button>
+      </div>
+      <div class="add-container">
+        <mat-form-field>
+          <input matInput placeholder="Новая запись">
+        </mat-form-field>
+        <button mat-fab aria-label="add new inbox">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <button mat-raised-button color="primary">
+        <a [routerLink]="['/notes/sorting', this.project?.id]">Sort notes</a>
+      </button>
+  </div>
+</div>

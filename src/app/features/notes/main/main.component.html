@@ -1,0 +1,24 @@
+<div class="wrapper">
+  <div class="block">
+    <div class="header">
+      <h1>MAIN</h1>
+    </div>
+  
+    <div *ngIf="projects.length" class="notes">
+      <div *ngFor="let note of projects" class="note">
+        <a [routerLink]="['/notes/project', note.id]"> {{note.title}} {{note.type}} </a>
+        <button mat-button (click)="this.removeProject(note)">
+          <mat-icon>highlight_remove</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="add-container">
+      <mat-form-field>
+        <input matInput placeholder="Новый проект" [(ngModel)]="this.newProjectText">
+      </mat-form-field>
+      <button mat-fab aria-label="add project" (click)="this.addProject()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
