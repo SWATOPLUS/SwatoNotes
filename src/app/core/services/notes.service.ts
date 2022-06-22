@@ -33,7 +33,7 @@ export class NoteService {
     }
 
     public getNote(id: string) {
-        return this.notes.find(x => x.id === id);
+        return cloneNotDeep(this.findNote(id));
     }
 
     public getTool(parentId: string, type: string) {
@@ -46,7 +46,7 @@ export class NoteService {
     }
 
     public getChildren(parentId: string) {
-        return this.notes.filter(x => x.parentId === parentId);
+        return this.notes.filter(x => x.parentId === parentId).map(cloneNotDeep);
     }
 
     public addNote(title: string, type: string, parentId: string, defaultId?: string) {
@@ -70,11 +70,19 @@ export class NoteService {
     }
 
     public setKey(id: string, title: string, description?: string) {
-      const note = this.getNote(id);
+      const note = this.findNote(id);
       note!.title = title;
       if(description?.length) {
         note!.description = description;
       }
       this.localStorage.set('notes', this.notes);
     }
+
+    private findNote(id: string) {
+      return this.notes.find(x => x.id === id);
+    }
+}
+
+function cloneNotDeep<T>(obj: T) {
+  return Object.assign({}, obj);
 }
