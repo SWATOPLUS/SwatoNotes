@@ -1,3 +1,4 @@
+import { NotesModule } from './features/notes/notes.module';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -14,28 +15,8 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'records',
-    loadChildren: () => import('./features/records/records.module').then(m => m.RecordsModule),
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'sorting',
-    loadChildren: () => import('./features/sorting/sorting.module').then(m => m.SortingModule),
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'main',
-    loadChildren: () => import('./features/main/main.module').then(m => m.MainModule),
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'project',
-    loadChildren: () => import('./features/projects/projects.module').then(m => m.ProjectsModule),
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'note',
-    loadChildren: () => import('./features/note/note.module').then(m => m.NoteModule),
+    path: 'notes',
+    loadChildren: () => import('./features/notes/notes.module').then(m => m.NotesModule),
     canActivate: [AuthGuard]
   },
   {

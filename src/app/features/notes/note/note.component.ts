@@ -1,4 +1,4 @@
-import { AuthenticationService } from './../../../core/services/auth.service';
+import { AuthenticationService } from '../../../core/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { Note, NoteService } from 'src/app/core/services/notes.service';

@@ -6,7 +6,7 @@
   
     <div *ngIf="projects.length" class="notes">
       <div *ngFor="let note of projects" class="note">
-        <a [routerLink]="['/project', note.id]"> {{note.title}} {{note.type}} </a>
+        <a [routerLink]="['/notes/project', note.id]"> {{note.title}} {{note.type}} </a>
         <button mat-button (click)="this.removeProject(note)">
           <mat-icon>highlight_remove</mat-icon>
         </button>

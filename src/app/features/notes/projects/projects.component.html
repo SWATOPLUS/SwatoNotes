@@ -36,7 +36,7 @@
     <div *ngIf="!subProjects.length"> NO PROJECTS YET </div>
     <div *ngIf="subProjects.length" class="notes">
       <div *ngFor="let note of subProjects" class="note">
-        <a [routerLink]="['/project', note.id]"> {{note.title}} {{note.type}} </a>
+        <a [routerLink]="['/notes/project', note.id]"> {{note.title}} {{note.type}} </a>
         <button mat-button (click)="this.removeNote(note)">
           <mat-icon>highlight_remove</mat-icon>
         </button>
@@ -73,7 +73,7 @@
         </button>
       </div>
       <button mat-raised-button color="primary">
-        <a [routerLink]="['/sorting', this.project?.id]">Sort notes</a>
+        <a [routerLink]="['/notes/sorting', this.project?.id]">Sort notes</a>
       </button>
   </div>
 </div>

@@ -59,7 +59,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   navToEdit(id: string) {
-    this.router.navigate([`/note/${id}`]);
+    this.router.navigate([`/notes/note/${id}`]);
   }
 
   constructor(private notificationService: NotificationService,
