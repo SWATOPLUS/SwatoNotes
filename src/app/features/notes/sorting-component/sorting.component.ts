@@ -6,6 +6,7 @@ import { NotificationService } from 'src/app/core/services/notification.service'
 import { Title } from '@angular/platform-browser';
 import { NGXLogger } from 'ngx-logger';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
+import * as uuid from 'uuid';
 
 @Component({
   selector: 'app-records',
@@ -33,20 +34,45 @@ export class SortingComponent implements OnInit {
   }
 
   sort(id: string) {
-    const newInbox = this.noteService
-      .getTool(id, 'inbox')
+    const newInbox = this.noteService.getTool(id, 'inbox');
     this.noteService.setParent(this.mainInbox[0].id, newInbox.id);
     this.reload();
     this.checkNotes();
   }
 
+  findProjectWithRecords(id: string): string | null {
+    const inbox = this.noteService.getTool(id, 'inbox');
+    const children = this.noteService
+      .getChildren(inbox.id)
+      .filter((e) => e.type === 'note');
+    if (children.length) {
+      return id;
+    }
+    const projects = this.noteService
+      .getChildren(id)
+      .filter((e) => e.type === 'project');
+    for (let project of projects) {
+      const result = this.findProjectWithRecords(project.id);
+      if (result === null) {
+        continue;
+      }
+      return result;
+    }
+    return null;
+  }
+
   checkNotes() {
     if (!this.mainInbox.length) {
-      if(this.projects.length) {
-        this.router.navigate([`/notes/sorting/${this.projects[0].id}`]);
+      const sortProject = this.findProjectWithRecords(uuid.NIL);
+      if (sortProject !== null) {
+        this.router.navigate([`/notes/sorting/${sortProject}`]);
       }
-      alert("Here is no notes for sorting anymore");
-      this.router.navigate([`/notes/main`]);
+      if (sortProject === null) {
+        this.notificationService.openSnackBar(
+          'Here is no notes for sorting anymore'
+        );
+        this.router.navigate([`/notes/main`]);
+      }
     }
   }
 
