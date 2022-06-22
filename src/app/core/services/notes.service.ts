@@ -64,7 +64,7 @@ export class NoteService {
     }
 
     public setParent(noteId: string, newParentId: string) {
-      const note = this.getNote(noteId);
+      const note = this.findNote(noteId);
       note!.parentId = newParentId;
       this.localStorage.set('notes', this.notes);
     }
