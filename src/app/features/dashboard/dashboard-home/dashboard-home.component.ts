@@ -23,7 +23,6 @@ export class DashboardHomeComponent implements OnInit {
     const data = await file.text();
     const dataArray = data.split(/\r?\n|\r/);
     this.groupNotes(dataArray);
-    console.log(this.newNotes)
   }
 
   groupNotes(dataArray: string[]) {

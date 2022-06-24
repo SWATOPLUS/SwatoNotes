@@ -10,11 +10,11 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
-
+  
+  public header: string = 'MAIN';
+  public placeholder: string = 'Новый проект';
   public mainNote!: Note
   public projects: Note[] = [];
-
-  public newProjectText: string = "";
 
   constructor(
     private logger: NGXLogger,
@@ -26,9 +26,8 @@ export class MainComponent implements OnInit {
     this.projects = this.noteService.getChildren(this.mainNote.id);
   }
 
-  addProject() {
-    this.noteService.addNote(this.newProjectText, "project", this.mainNote.id);
-    this.newProjectText = "";
+  addProject(newProjectText: string) {
+    this.noteService.addNote(newProjectText, "project", this.mainNote.id);
     this.reload();
   }
 

@@ -7,6 +7,7 @@ import { ProjectsComponent } from './projects/projects.component';
 import { NoteComponent } from './note/note.component';
 import { RecordsComponent } from './records/records.component';
 import { SortingComponent } from './sorting-component/sorting.component';
+import { NoteWidgetComponent } from './components/note-widget/note-widget.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { SortingComponent } from './sorting-component/sorting.component';
         ProjectsComponent,
         NoteComponent,
         RecordsComponent,
-        SortingComponent
+        SortingComponent,
+        NoteWidgetComponent
     ],
     imports: [
         CommonModule,

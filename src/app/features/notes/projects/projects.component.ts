@@ -16,21 +16,22 @@ export class ProjectsComponent implements OnInit {
   currentUser: any;
 
   public project: Note | any;
+  public inbox: Note | any
   public subProjects: any;
   public notes: Note [] = [];
   public inboxRecord: Note[] = [];
   private subscription: Subscription;
 
-  public newNoteText: string = "";
-  public newProjectText: string = "";
+  public notesPlaceholder: string = "Новая заметка";
+  public notesHeader: string = "Заметки";
+  public projectPlaceholder: string = "Новый проект";
+  public projectHeader: string = "Проекты";
+  public recordsPlaceholder: string = "Новая запись";
+  public recordsHeader: string = "Входящие записи";
+
 
   displayDate(note: Note) {
     return note.creationLocalDateTime;
-  }
-
-  reload() {
-    this.notes = this.noteService.getChildren(this.project.id).filter(x => x.type === 'note');
-    this.subProjects = this.noteService.getChildren(this.project.id).filter(x => x.type === 'project');
   }
 
   removeNote(note: Note) {
@@ -38,28 +39,33 @@ export class ProjectsComponent implements OnInit {
     this.reload();
   }
   
-  addNote() {
-    this.noteService.addNote(this.newNoteText, 'note', this.project.id);
-    this.reload();
-    this.newNoteText = "";
-  }
-
-  addProject() {
-    this.noteService.addNote(this.newProjectText, "project", this.project.id);
-    this.newProjectText = "";
+  addNote(newNoteText: string) {
+    this.noteService.addNote(newNoteText, 'note', this.project.id);
     this.reload();
   }
+  
+  addProject(newProjectText: string) {
+    this.noteService.addNote(newProjectText, "project", this.project.id);
+    this.reload();
+  }
+  
+  addRecord(newRecordText: string) {
+    this.noteService.addNote(newRecordText, "note", this.inbox.id);
+    this.reload();
+  }
 
+  reload() {
+    this.notes = this.noteService.getChildren(this.project.id).filter(x => x.type === 'note');
+    this.subProjects = this.noteService.getChildren(this.project.id).filter(x => x.type === 'project');
+    this.inboxRecord = this.noteService.getChildren(this.inbox.id);
+  }
+  
   reloadProject(id: string) {
     this.project = this.noteService.getNote(id);
-    const inbox = this.noteService.getTool(this.project.id, 'inbox');
-    this.inboxRecord = this.noteService.getChildren(inbox?.id);
+    this.inbox = this.noteService.getTool(this.project.id, 'inbox');
+    this.inboxRecord = this.noteService.getChildren(this.inbox.id);
     this.subProjects = this.noteService.getChildren(this.project?.id).filter(x => x.type === 'project');
     this.notes = this.noteService.getChildren(this.project?.id).filter(x => x.type === 'note');
-  }
-
-  navToEdit(id: string) {
-    this.router.navigate([`/notes/note/${id}`]);
   }
 
   constructor(private notificationService: NotificationService,
@@ -67,8 +73,7 @@ export class ProjectsComponent implements OnInit {
     private titleService: Title,
     private logger: NGXLogger,
     private noteService: NoteService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router) {
+    private activatedRoute: ActivatedRoute) {
       this.subscription = this.activatedRoute.params.subscribe(params => this.reloadProject(params["id"]));
   }
 
