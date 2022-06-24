@@ -1,22 +1,33 @@
 <div class="block">
-    <div class="header">
-      <h1>MAIN</h1>
-    </div>
-<div *ngIf="projects.length" class="notes">
-    <div *ngFor="let note of projects" class="note">
-      <a [routerLink]="['/notes/project', note.id]"> {{note.title}} {{note.type}} </a>
-      <button mat-button (click)="removeProject.emit(note)">
+  <div class="header">
+    <h1>{{header}}</h1>
+  </div>
+  <div *ngIf="!items?.length">NO NOTES YET</div>
+  <div *ngIf="items.length" class="notes">
+    <div *ngFor="let item of items" class="note">
+      <div *ngIf="isClickable">
+        <a [routerLink]="['/notes/project', item.id]"> {{item.title}} </a>
+      </div>
+      <div *ngIf="!isClickable">
+        <div (dblclick)="navToEdit(item.id)">{{item.title}}</div>
+      </div>
+      <div *ngIf="!hideDate" class="time">{{displayDate(item.creationLocalDateTime)}}</div>
+      <button mat-button (click)="removeItem.emit(item)">
         <mat-icon>highlight_remove</mat-icon>
       </button>
     </div>
-</div>
-<div class="add-container">
+  </div>
+  <div class="add-container">
     <mat-form-field>
-      <input matInput placeholder="Новый проект" [(ngModel)]="newProjectText">
+      <input matInput placeholder="{{placeholder}}" [(ngModel)]="newItemText">
     </mat-form-field>
-    <button mat-fab aria-label="add project" (click)="addProject()">
+    <button mat-fab aria-label="add item" (click)="addItem()">
       <mat-icon>add</mat-icon>
     </button>
   </div>
+  <div *ngIf="!hideSortLink">
+    <button mat-raised-button color="primary">
+      <a [routerLink]="['/notes/sorting', this.project?.id]">Sort notes</a>
+    </button>
+  </div>
 </div>
-

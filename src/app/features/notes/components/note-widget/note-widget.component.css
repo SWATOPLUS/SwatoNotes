@@ -1,28 +1,32 @@
 div {
-    margin: 10px;
-  }
-  
-  button {
-    margin: 10px;
-  }
-  
-  .wrapper {
-    display: flex;
-  }
-  
-  .block {
-    border-radius: 10px;
-    border: 3px solid #6743B7;
-  }
-  
-  .note {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+  margin: 10px;
+}
 
-  .note a{
-    text-decoration: none;
-    cursor: pointer;
-    color: black;
-  }
+button {
+  margin: 10px;
+}
+
+.wrapper {
+  display: flex;
+}
+
+.block {
+  border-radius: 10px;
+  border: 3px solid #6743B7;
+}
+
+.note {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+
+button a {
+  color: white;
+}

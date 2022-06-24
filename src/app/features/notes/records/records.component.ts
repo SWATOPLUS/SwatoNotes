@@ -13,14 +13,11 @@ import { Note, NoteService } from 'src/app/core/services/notes.service';
 export class RecordsComponent implements OnInit {
   currentUser: any;
 
+  public header: string = 'Записи';
+  public placeholder: string = 'Новая заметка';
   public records: Note[] = [];
   public inbox!: Note;
 
-  public newNoteText: string = '';
-
-  displayDate(note: Note) {
-    return note.creationLocalDateTime;
-  }
 
   reload() {
     this.records = this.noteService.getChildren(this.inbox.id);
@@ -31,10 +28,9 @@ export class RecordsComponent implements OnInit {
     this.reload();
   }
   
-  addNote() {
-    this.noteService.addNote(this.newNoteText, 'note', this.inbox.id);
+  addNote(newNoteText: string) {
+    this.noteService.addNote(newNoteText, 'note', this.inbox.id);
     this.reload();
-    this.newNoteText = "";
   }
 
   constructor(private notificationService: NotificationService,

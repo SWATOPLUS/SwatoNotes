@@ -10,7 +10,9 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
-
+  
+  public header: string = 'MAIN';
+  public placeholder: string = 'Новый проект';
   public mainNote!: Note
   public projects: Note[] = [];
 

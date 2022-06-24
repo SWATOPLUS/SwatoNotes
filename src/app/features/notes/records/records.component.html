@@ -1,28 +1,3 @@
 <div class="wrapper">
-
-  <div class="block">
-    <div class="header">
-      <h1>Записи</h1>
-    </div>
-    <div>
-      <div *ngIf="!records?.length">NO NOTES YET</div>
-      <div *ngIf="records?.length" class="notes">
-        <div class="note" *ngFor="let note of records">
-          <div>{{note.title}}</div>
-          <div class="time">{{displayDate(note)}}</div>
-          <button mat-button (click)="removeNote(note)">
-            <mat-icon>highlight_remove</mat-icon>
-          </button>
-        </div>
-      </div>
-      <div class="add-container">
-        <mat-form-field>
-          <input matInput placeholder="Новая заметка" [(ngModel)]="newNoteText">
-        </mat-form-field>
-        <button mat-fab aria-label="add new note" (click)="addNote()">
-          <mat-icon>add</mat-icon>
-        </button>
-      </div>
-    </div>
-  </div>
+  <app-note-widget [hideDate]="false" [header]="header" [items]="records" [placeholder]="placeholder" (addNewItem)="addNote($event)" (removeItem)="removeNote($event)"></app-note-widget>
 </div>
