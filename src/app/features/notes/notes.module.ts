@@ -8,6 +8,7 @@ import { NoteComponent } from './note/note.component';
 import { RecordsComponent } from './records/records.component';
 import { SortingComponent } from './sorting-component/sorting.component';
 import { NoteWidgetComponent } from './components/note-widget/note-widget.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 @NgModule({
@@ -23,7 +24,7 @@ import { NoteWidgetComponent } from './components/note-widget/note-widget.compon
         CommonModule,
         SharedModule,
         NotesRoutingModule,
-        
+        DragDropModule,
     ],
     entryComponents: []
 })
