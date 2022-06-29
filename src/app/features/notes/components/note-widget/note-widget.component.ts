@@ -13,25 +13,27 @@ export class NoteWidgetComponent implements OnInit {
   @Input() placeholder: string = '';
   @Input() hideDate: boolean = true;
   @Input() project!: Note;
+  @Input() listId: string = 'note';
+  @Output() dropItem = new EventEmitter<any>();
   @Output() removeItem = new EventEmitter<Note>();
   @Output() addNewItem = new EventEmitter<string>();
-  
+
   public newItemText: string = '';
-  
+
   public currentDate: number = new Date().getDate();
   public isClickable: boolean = false;
   public hideSortLink: boolean = true;
-  
+
   checkClickable() {
-    if (this.header === "MAIN" || this.header === "Проекты") {
+    if (this.header === 'MAIN' || this.header === 'Проекты') {
       this.isClickable = true;
     } else {
-    this.isClickable = false;
+      this.isClickable = false;
     }
   }
 
   isSortable() {
-    if(this.project) {
+    if (this.project) {
       this.hideSortLink = false;
     }
   }
@@ -58,8 +60,8 @@ export class NoteWidgetComponent implements OnInit {
   navToEdit(id: string) {
     this.router.navigate([`/notes/note/${id}`]);
   }
-  
-  constructor(private router: Router) {  }
+
+  constructor(private router: Router) {}
 
   ngOnInit() {
     this.checkClickable();

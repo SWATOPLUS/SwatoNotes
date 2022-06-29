@@ -6,6 +6,7 @@ import { Title } from '@angular/platform-browser';
 import { NGXLogger } from 'ngx-logger';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { Note, NoteService } from 'src/app/core/services/notes.service';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-projects',
@@ -16,10 +17,13 @@ export class ProjectsComponent implements OnInit {
   currentUser: any;
 
   public project: Note | any;
-  public inbox: Note | any
+  public inbox: Note | any;
   public subProjects: any;
   public notes: Note [] = [];
   public inboxRecord: Note[] = [];
+  public recordsListId: string = 'records';
+  public projectsListId: string = 'projects';
+  public notesListId: string = 'notes';
   private subscription: Subscription;
 
   public notesPlaceholder: string = "Новая заметка";
@@ -51,6 +55,37 @@ export class ProjectsComponent implements OnInit {
   
   addRecord(newRecordText: string) {
     this.noteService.addNote(newRecordText, "note", this.inbox.id);
+    this.reload();
+  }
+
+  drop(event: CdkDragDrop<Note[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
+    let eventNote = event.container.data[event.currentIndex];
+    let note = this.noteService.getNote(eventNote.id);
+    if(event.container.id != event.previousContainer.id) {
+      switch(event.container.id) {
+        case 'notes':
+          this.noteService.setKey(note.id, undefined, undefined, 'note');
+          this.noteService.setParent(note.id, this.project.id);
+          break;
+        case 'projects':
+          this.noteService.setKey(note.id, undefined, undefined, 'project');
+          this.noteService.setParent(note.id, this.project.id);
+          break;
+        case 'records':
+          this.noteService.setKey(note.id, undefined, undefined, 'note');
+          this.noteService.setParent(note.id, this.inbox.id);
+      }
+    }
     this.reload();
   }
 

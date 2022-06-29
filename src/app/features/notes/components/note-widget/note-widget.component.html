@@ -3,8 +3,8 @@
     <h1>{{header}}</h1>
   </div>
   <div *ngIf="!items?.length">NO NOTES YET</div>
-  <div *ngIf="items.length" class="notes">
-    <div *ngFor="let item of items" class="note">
+  <div *ngIf="items.length" class="notes" cdkDropList [id]="listId" [cdkDropListData]="items" (cdkDropListDropped)="dropItem.emit($event)">
+    <div *ngFor="let item of items" class="note" cdkDrag>
       <div *ngIf="isClickable">
         <a [routerLink]="['/notes/project', item.id]"> {{item.title}} </a>
       </div>
