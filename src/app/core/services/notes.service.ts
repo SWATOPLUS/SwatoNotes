@@ -69,11 +69,16 @@ export class NoteService {
       this.localStorage.set('notes', this.notes);
     }
 
-    public setKey(id: string, title: string, description?: string) {
+    public setKey(id: string, title?: string, description?: string, type?: string) {
       const note = this.findNote(id);
-      note!.title = title;
+      if(title?.length) {
+        note!.title = title;
+      }
       if(description?.length) {
         note!.description = description;
+      }
+      if(type?.length) {
+        note!.type = type;
       }
       this.localStorage.set('notes', this.notes);
     }
