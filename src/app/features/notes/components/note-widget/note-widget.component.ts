@@ -40,12 +40,22 @@ export class NoteWidgetComponent implements OnInit {
 
   displayDate(itemDate: number) {
     const date = new Date(itemDate).getDate();
-    const month = new Date(itemDate).getMonth();
+    const month = new Date(itemDate).getMonth() + 1;
     const hour = new Date(itemDate).getHours();
     const minutes = new Date(itemDate).getMinutes();
     const seconds = new Date(itemDate).getSeconds();
-    const fullDate = date + '.' + month;
-    const time = hour + ':' + minutes + ':' + seconds;
+    
+    const fullDate = [date, month].map(d => checkFigures(d)).join('.');
+    const time = [hour, minutes, seconds].map(d => checkFigures(d)).join(':');
+
+    function checkFigures(figure: number) {
+      let newFigure =  "0" + figure;
+      if(figure < 10) {
+        return newFigure
+      }
+      return figure
+    }
+
     if (this.currentDate == date) {
       return time;
     }
