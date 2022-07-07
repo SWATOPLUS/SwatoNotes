@@ -1,3 +1,11 @@
+.header {
+  text-align: center;
+}
+
 .wrapper {
+  display: flex;
+}
+
+app-note-widget {
   display: flex;
 }
