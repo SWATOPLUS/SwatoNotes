@@ -83,6 +83,14 @@ export class NoteService {
       this.localStorage.set('notes', this.notes);
     }
 
+    public moveNote(noteId: string, neighborId: string) {
+      const prevIndex = this.notes.findIndex(n => n.id == noteId);
+      const newIndex = this.notes.findIndex(n => n.id == neighborId);
+      const splicedNote = this.notes.splice(prevIndex, 1);
+      this.notes.splice(newIndex, 0, splicedNote[0]);
+      this.localStorage.set('notes', this.notes);
+    }
+
     private findNote(id: string) {
       return this.notes.find(x => x.id === id);
     }
