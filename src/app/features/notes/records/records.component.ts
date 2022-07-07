@@ -4,6 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { NGXLogger } from 'ngx-logger';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { Note, NoteService } from 'src/app/core/services/notes.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-records',
@@ -18,7 +19,6 @@ export class RecordsComponent implements OnInit {
   public records: Note[] = [];
   public inbox!: Note;
 
-
   reload() {
     this.records = this.noteService.getChildren(this.inbox.id);
   }
@@ -31,6 +31,16 @@ export class RecordsComponent implements OnInit {
   addNote(newNoteText: string) {
     this.noteService.addNote(newNoteText, 'note', this.inbox.id);
     this.reload();
+  }
+
+  drop(event: CdkDragDrop<Note[]>) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      let eventNote = event.container.data[event.currentIndex];
+      let note = this.noteService.getNote(eventNote.id);
+      const eventNeighbor = event.container.data[event.currentIndex + 1];
+      const neighborNote = this.noteService.getNote(eventNeighbor.id); 
+      this.noteService.moveNote(note.id, neighborNote.id);
+      this.reload();
   }
 
   constructor(private notificationService: NotificationService,
