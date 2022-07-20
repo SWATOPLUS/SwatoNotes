@@ -1,3 +1,4 @@
+import { DragDropService } from './../../../core/services/drag-drop.service';
 import { Component, OnInit } from '@angular/core';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { Title } from '@angular/platform-browser';
@@ -9,7 +10,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 @Component({
   selector: 'app-records',
   templateUrl: './records.component.html',
-  styleUrls: ['./records.component.css']
+  styleUrls: ['./records.component.css'],
 })
 export class RecordsComponent implements OnInit {
   currentUser: any;
@@ -27,34 +28,41 @@ export class RecordsComponent implements OnInit {
     this.noteService.removeNote(note.id);
     this.reload();
   }
-  
+
   addNote(newNoteText: string) {
     this.noteService.addNote(newNoteText, 'note', this.inbox.id);
     this.reload();
   }
 
   drop(event: CdkDragDrop<Note[]>) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-      let eventNote = event.container.data[event.currentIndex];
-      let note = this.noteService.getNote(eventNote.id);
-      const eventNeighbor = event.container.data[event.currentIndex + 1];
-      const neighborNote = this.noteService.getNote(eventNeighbor.id); 
-      this.noteService.moveNote(note.id, neighborNote.id);
-      this.reload();
+    this.dragDropService.moveItemInGroup(
+      event.container.data[event.previousIndex].id,
+      event.container.data[event.currentIndex].id
+    );
+    moveItemInArray(
+      event.container.data,
+      event.previousIndex,
+      event.currentIndex
+    );
+    this.reload();
   }
 
-  constructor(private notificationService: NotificationService,
+  constructor(
+    private notificationService: NotificationService,
     private authService: AuthenticationService,
     private titleService: Title,
     private logger: NGXLogger,
-    private noteService: NoteService) {
-  }
+    private noteService: NoteService,
+    private dragDropService: DragDropService
+  ) {}
 
   ngOnInit() {
     this.currentUser = this.authService.getCurrentUser();
     this.titleService.setTitle('angular-material-template - Dashboard');
     const mainNote = this.noteService.getMainNote();
-    this.inbox = this.noteService.getChildren(mainNote.id).filter(x => x.type === 'inbox')[0];
+    this.inbox = this.noteService
+      .getChildren(mainNote.id)
+      .filter((x) => x.type === 'inbox')[0];
     this.reload();
     this.logger.log('Dashboard loaded');
 

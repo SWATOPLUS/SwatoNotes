@@ -1,3 +1,4 @@
+import { DragDropService } from './../../../core/services/drag-drop.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -63,11 +64,10 @@ export class ProjectsComponent implements OnInit {
 
   drop(event: CdkDragDrop<Note[]>) {
     if (event.previousContainer === event.container) {
-      let eventNote = event.container.data[event.previousIndex];
-      let note = this.noteService.getNote(eventNote.id);
-      const eventTargetNote = event.container.data[event.currentIndex];
-      const targetNote = this.noteService.getNote(eventTargetNote.id); 
-      this.noteService.moveNote(note.id, targetNote.id);
+      this.dragDropService.moveItemInGroup(
+        event.container.data[event.previousIndex].id,
+        event.container.data[event.currentIndex].id
+      )
       moveItemInArray(
         event.container.data,
         event.previousIndex,
@@ -80,21 +80,11 @@ export class ProjectsComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
-      let eventNote = event.container.data[event.currentIndex];
-      let note = this.noteService.getNote(eventNote.id);
-      switch (event.container.id) {
-        case 'notes':
-          this.noteService.setKey(note.id, undefined, undefined, 'note');
-          this.noteService.setParent(note.id, this.project.id);
-          break;
-        case 'projects':
-          this.noteService.setKey(note.id, undefined, undefined, 'project');
-          this.noteService.setParent(note.id, this.project.id);
-          break;
-        case 'records':
-          this.noteService.setKey(note.id, undefined, undefined, 'note');
-          this.noteService.setParent(note.id, this.inbox.id);
-      }
+      this.dragDropService.moveToAnotherGroup(
+        event.container.data[event.currentIndex].id,
+        event.container.id,
+        this.project.id,
+        this.inbox.id)
     }
     this.reload();
   }
@@ -127,7 +117,8 @@ export class ProjectsComponent implements OnInit {
     private titleService: Title,
     private logger: NGXLogger,
     private noteService: NoteService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private dragDropService: DragDropService 
   ) {
     this.subscription = this.activatedRoute.params.subscribe((params) =>
       this.reloadProject(params['id'])
