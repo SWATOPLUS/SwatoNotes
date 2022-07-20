@@ -63,16 +63,16 @@ export class ProjectsComponent implements OnInit {
 
   drop(event: CdkDragDrop<Note[]>) {
     if (event.previousContainer === event.container) {
+      let eventNote = event.container.data[event.previousIndex];
+      let note = this.noteService.getNote(eventNote.id);
+      const eventTargetNote = event.container.data[event.currentIndex];
+      const targetNote = this.noteService.getNote(eventTargetNote.id); 
+      this.noteService.moveNote(note.id, targetNote.id);
       moveItemInArray(
         event.container.data,
         event.previousIndex,
         event.currentIndex
       );
-      let eventNote = event.container.data[event.currentIndex];
-      let note = this.noteService.getNote(eventNote.id);
-      const eventNeighbor = event.container.data[event.currentIndex + 1];
-      const neighborNote = this.noteService.getNote(eventNeighbor.id); 
-      this.noteService.moveNote(note.id, neighborNote.id);
     } else {
       transferArrayItem(
         event.previousContainer.data,
