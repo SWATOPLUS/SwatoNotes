@@ -1,11 +1,18 @@
-<div>
-  Проект : {{this.project?.title}}
+<div class="header">
+  <h2>Проект : {{this.project?.title}}</h2>
 </div>
-<div class="wrapper">
-  <app-note-widget [items]="notes" [header]="notesHeader" [placeholder]="notesPlaceholder" [hideDate]="false" (removeItem)="removeNote($event)" (addNewItem)="addNote($event)"></app-note-widget>
-  <app-note-widget [items]="subProjects" [header]="projectHeader" [placeholder]="projectPlaceholder" (addNewItem)="addProject($event)" (removeItem)="removeNote($event)"></app-note-widget>
-</div>
+<div cdkDropListGroup>
+  <div class="wrapper">
+    <app-note-widget [items]="notes" [header]="notesHeader" [placeholder]="notesPlaceholder" [hideDate]="false" [listId]="notesListId"
+      (removeItem)="removeNote($event)" (addNewItem)="addNote($event)" (dropItem)="drop($event)"></app-note-widget>
+    <app-note-widget [items]="subProjects" [header]="projectHeader" [placeholder]="projectPlaceholder" [listId]="projectsListId"
+      (addNewItem)="addProject($event)" (removeItem)="removeNote($event)" (dropItem)="drop($event)"></app-note-widget>
+  </div>
 
-<div class="wrapper">
-  <app-note-widget [items]="inboxRecord" [header]="recordsHeader" [placeholder]="recordsPlaceholder" [hideDate]="false" [project]="project" (addNewItem)="addRecord($event)" (removeItem)="removeNote($event)"></app-note-widget>
+  <div class="wrapper">
+    <app-note-widget [items]="inboxRecord" [header]="recordsHeader" [placeholder]="recordsPlaceholder"
+      [hideDate]="false" [project]="project" [listId]="recordsListId" (addNewItem)="addRecord($event)" (removeItem)="removeNote($event)"
+      (dropItem)="drop($event)">
+    </app-note-widget>
+  </div>
 </div>

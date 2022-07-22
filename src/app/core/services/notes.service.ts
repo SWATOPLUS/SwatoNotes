@@ -69,12 +69,25 @@ export class NoteService {
       this.localStorage.set('notes', this.notes);
     }
 
-    public setKey(id: string, title: string, description?: string) {
+    public setKey(id: string, title?: string, description?: string, type?: string) {
       const note = this.findNote(id);
-      note!.title = title;
+      if(title?.length) {
+        note!.title = title;
+      }
       if(description?.length) {
         note!.description = description;
       }
+      if(type?.length) {
+        note!.type = type;
+      }
+      this.localStorage.set('notes', this.notes);
+    }
+
+    public moveNote(noteId: string, targetId: string) {
+      const prevIndex = this.notes.findIndex(n => n.id == noteId);
+      const targetIndex = this.notes.findIndex(n => n.id == targetId);
+      const splicedNote = this.notes.splice(prevIndex, 1);
+      this.notes.splice(targetIndex, 0, splicedNote[0]);
       this.localStorage.set('notes', this.notes);
     }
 
