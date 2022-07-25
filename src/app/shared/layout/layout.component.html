@@ -9,11 +9,15 @@
 
     <a class="navbar-brand" [routerLink]="['/']" matTooltip="Home">
       <h1>
-        angular-material-template
+        SwatoNotes
       </h1>
     </a>
 
     <span class="navbar-spacer"></span>
+
+    <mat-icon>brightness_5</mat-icon>
+    <mat-slide-toggle class="theme-toggle" [formControl]="toggleControl"></mat-slide-toggle>
+    <mat-icon>bedtime</mat-icon>
 
     <button mat-icon-button [matMenuTriggerFor]="notificationMenu">
       <mat-icon matBadge="2" matBadgeColor="accent">notifications</mat-icon>
@@ -67,14 +71,14 @@
           </mat-icon>
           <p mat-line> Dashboard </p>
         </a>
-        
+
         <a mat-list-item [routerLink]="['/notes/main']" routerLinkActive="active">
           <mat-icon mat-list-icon>
             home_filled
           </mat-icon>
           <p mat-line> Main Page </p>
         </a>
-        
+
         <a mat-list-item [routerLink]="['/todo']" routerLinkActive="active">
           <mat-icon mat-list-icon>
             dashboard
